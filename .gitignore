@@ -1,0 +1,20 @@
+# Ignore Python virtual environments
+.venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore PyCharm settings
+.idea/
+
+# Ignore log files
+*.log
+
+# Ignore system files (Windows/macOS)
+.DS_Store
+Thumbs.db
+
+# Ignore environment variable files
+.env
