@@ -1,0 +1,58 @@
+[tool.ruff]
+line-length = 100
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+    "*.ipynb",
+]
+
+[tool.ruff.lint]
+fixable = ["I"]
+ignore = [
+    "T201",
+    "E501",
+    "COM812",
+    "RET504",
+    "PT018",
+    "S101",
+    "FBT001",
+    "FBT002",
+    "INP001",
+    "PLR0913",
+
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D105",
+    "D107",
+]
+
+select = ["ALL"]
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
