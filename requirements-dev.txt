@@ -1,0 +1,6 @@
+-r requirements.txt
+
+# Dev tools
+mypy>=1.18
+ruff>=0.13
+pre-commit>=4.3.0
