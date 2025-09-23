@@ -20,7 +20,7 @@ class NoduleNet(nn.Module):
         self.head = nn.Linear(in_features=1152, out_features=2)
 
     def forward(self, x: Tensor) -> Tensor:
-        """x = (nBatch, nChannels, height, width, depth)."""
+        """Tensor dim: (nBatch, nChannels, height, width, depth)."""
         x = self.tail(x)
         x = self.backbone(x)
 

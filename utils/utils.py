@@ -19,11 +19,11 @@ def irc_to_xyz(
 
 
 def xyz_to_irc(
-    coord_xyz: np.ndarray,
+    coord_xyz: tuple[float, float, float],
     origin_xyz: np.ndarray,
     vx_size_xyz: np.ndarray,
     direction: np.ndarray,
-) -> tuple[int, int, int]:
+) -> np.ndarray:
     coord = np.array([*coord_xyz])
     coord = coord - origin_xyz
     coord = np.linalg.inv(direction) @ coord

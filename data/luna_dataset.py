@@ -1,6 +1,11 @@
 from __future__ import annotations
 
-from typing import NamedTuple
+from typing import TYPE_CHECKING, NamedTuple, cast
+
+if TYPE_CHECKING:
+    from pathlib import Path
+
+    import numpy as np
 
 import pandas as pd
 import torch
@@ -55,9 +60,7 @@ class LunaDataset(Dataset):
     def __len__(self) -> int:
         return len(self.candidate_info_list)
 
-    def __getitem__(
-        self, index: int
-    ) -> tuple[torch.Tensor, torch.Tensor, str, tuple[float, float, float]]:
+    def __getitem__(self, index: int) -> tuple[torch.Tensor, torch.Tensor, str, np.ndarray]:
         assert index >= 0 and index < len(self.candidate_info_list), "index out of range"
 
         series_uid = self.candidate_info_list[index].series_uid
@@ -76,27 +79,35 @@ class LunaDataset(Dataset):
 
     @staticmethod
     def _get_candidate_info(
-        annotations_path: str, candidates_path: str
+        annotations_path: Path, candidates_path: Path
     ) -> list[CandidateInfoTuple]:
         annotations_df = pd.read_csv(filepath_or_buffer=annotations_path)
         candidates_df = pd.read_csv(filepath_or_buffer=candidates_path)
 
-        annotations_dict: dict[list[AnnotationTuple]] = {}
+        annotations_dict: dict[str, list[AnnotationTuple]] = {}
         for row in annotations_df.itertuples():
-            annotations_dict.setdefault(row.seriesuid, []).append(
+            series_uid = cast("str", row.seriesuid)
+            coord_x = cast("float", row.coordX)
+            coord_y = cast("float", row.coordY)
+            coord_z = cast("float", row.coordZ)
+            diameter_mm = cast("float", row.diameter_mm)
+
+            annotations_dict.setdefault(series_uid, []).append(
                 AnnotationTuple(
-                    series_uid=row.seriesuid,
-                    coord=(row.coordX, row.coordY, row.coordZ),
-                    diameter=row.diameter_mm,
+                    series_uid=series_uid,
+                    coord=(coord_x, coord_y, coord_z),
+                    diameter=diameter_mm,
                 )
             )
 
         candidate_info_list: list[CandidateInfoTuple] = []
         for row in candidates_df.itertuples():
-            series_uid = row.seriesuid
-            coord_x, coord_y, coord_z = row.coordX, row.coordY, row.coordZ
-            is_nodule = row[5]  # .class is a reserved keyword in Python
-            diameter_mm = 0
+            series_uid = cast("str", row.seriesuid)
+            coord_x = cast("float", row.coordX)
+            coord_y = cast("float", row.coordY)
+            coord_z = cast("float", row.coordZ)
+            is_nodule = cast("bool", row[5])  # .class is a reserved keyword in Python
+            diameter_mm = 0.0
 
             if series_uid in annotations_dict:
                 current_coord = (coord_x, coord_y, coord_z)

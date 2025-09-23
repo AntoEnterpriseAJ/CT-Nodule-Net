@@ -18,7 +18,7 @@ class NoduleBlock(nn.Module):
         self.pool = nn.MaxPool3d(kernel_size=2)
 
     def forward(self, x: Tensor) -> Tensor:
-        """x = (nBatch, nChannels, height, width, depth)."""
+        """Tensor dim: (nBatch, nChannels, height, width, depth)."""
         x = self.relu1(self.conv1(x))
         x = self.relu2(self.conv2(x))
         x = self.pool(x)

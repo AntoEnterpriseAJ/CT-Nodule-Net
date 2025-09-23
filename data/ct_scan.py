@@ -22,7 +22,7 @@ class CTScan:
 
     def get_raw_candidate(
         self, candidate_xyz: tuple[float, float, float], width_irc: tuple[int, int, int]
-    ) -> tuple[np.ndarray, tuple[float, float, float]]:
+    ) -> tuple[np.ndarray, np.ndarray]:
         candidate_irc = xyz_to_irc(candidate_xyz, self.origin_xyz, self.vxSize_xyz, self.direction)
 
         slices: list[slice] = []
