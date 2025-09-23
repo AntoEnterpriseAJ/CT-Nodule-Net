@@ -65,7 +65,7 @@ def training_loop(
             total_loss += loss.item()
             print(f"Epoch{epoch}/{n_epochs}, Batch{batch_ndex}/{len(train_dl)}: loss={loss.item()}")
 
-        print(f"Epoch{epoch}/{n_epochs}: avg loss={total_loss / len(train_dl.dataset)}")
+        print(f"Epoch{epoch}/{n_epochs}: avg loss={total_loss / len(train_dl.dataset)}")  # type: ignore[arg-type]
 
 
 def main() -> None:
