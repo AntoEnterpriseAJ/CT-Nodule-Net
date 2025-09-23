@@ -48,11 +48,12 @@ ignore = [
     "D101",
     "D102",
     "D103",
+    "D104",
     "D105",
     "D107",
 ]
-
 select = ["ALL"]
+
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
