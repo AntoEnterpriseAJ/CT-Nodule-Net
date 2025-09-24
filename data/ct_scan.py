@@ -27,8 +27,8 @@ class CTScan:
 
         slices: list[slice] = []
         for axis, length in enumerate(width_irc):
-            start_pos = int(candidate_irc[axis] - length / 2)
-            stop_pos = int(candidate_irc[axis] + length / 2)
+            start_pos = round(candidate_irc[axis] - length / 2)
+            stop_pos = start_pos + length
 
             assert length >= 0 and length < self.ct_array.shape[axis]
 
@@ -39,6 +39,8 @@ class CTScan:
             if stop_pos > self.ct_array.shape[axis]:
                 stop_pos = self.ct_array.shape[axis]
                 start_pos = stop_pos - length
+
+            assert stop_pos - start_pos == length, "length mismatch"
 
             slices.append(slice(start_pos, stop_pos))
 
