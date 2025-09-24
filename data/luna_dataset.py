@@ -12,7 +12,7 @@ import torch
 from torch.utils.data import Dataset
 
 from config import ANNOTATIONS_PATH, CANDIDATES_PATH
-from data.cache import get_ct_scan
+from data.cache import get_ct_raw_candidate
 from utils.utils import coord_distance
 
 
@@ -67,9 +67,8 @@ class LunaDataset(Dataset):
         xyz = self.candidate_info_list[index].center_xyz
         is_nodule = self.candidate_info_list[index].is_nodule
 
-        ct_scan = get_ct_scan(series_uid)
-        candidate, candidate_irc = ct_scan.get_raw_candidate(
-            candidate_xyz=xyz, width_irc=(32, 48, 48)
+        candidate, candidate_irc = get_ct_raw_candidate(
+            series_uid=series_uid, center_xyz=xyz, width_irc=(32, 48, 48)
         )
 
         candidate_t = torch.tensor(candidate, dtype=torch.float32).unsqueeze(0)
